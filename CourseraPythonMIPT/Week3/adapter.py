@@ -36,16 +36,15 @@ class MappingAdapter:
         self.adaptee = adaptee
 
     def lighten(self, grid):
-        dim = (len(grid), len(grid[0]))
-        self.adaptee.set_dim(dim)
         lights = []
         obstacles = []
-        for x in range(dim[0]):
-            for y in range(dim[1]):
+        for x in range(len(grid)):
+            for y in range(len(grid[x])):
                 if grid[x][y] == 1:
-                    lights += (x, y)
-                elif grid[x][y] == -1:
-                    obstacles += (x, y)
+                    lights.append((y, x))
+                if grid[x][y] == -1:
+                    obstacles.append((y, x))
+        self.adaptee.set_dim((len(grid[0]), len(grid)))
         self.adaptee.set_lights(lights)
         self.adaptee.set_obstacles(obstacles)
         return self.adaptee.generate_lights()
