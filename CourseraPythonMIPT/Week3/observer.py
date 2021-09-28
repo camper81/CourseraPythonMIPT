@@ -1,5 +1,5 @@
- #from abc import ABC, abstractmethod
-
+#  from abc import ABC, abstractmethod
+#
 # class Engine():
 #     def __init__(self):
 #         pass
@@ -22,7 +22,7 @@ class ObservableEngine(Engine):
 
 class AbstractObserver(ABC):
     @abstractmethod
-    def update(self):
+    def update(self, message):
         pass
 
 class ShortNotificationPrinter(AbstractObserver):
@@ -31,12 +31,13 @@ class ShortNotificationPrinter(AbstractObserver):
 
 
     def update(self, message):
-        self.achievements.append(message)
+        self.achievements.add(message['title'])
 
 class FullNotificationPrinter(AbstractObserver):
     def __init__(self):
         self.achievements = list()
 
     def update(self, message):
-        self.achievements.append(message)
+        if message not in self.achievements:
+            self.achievements.append(message)
 
